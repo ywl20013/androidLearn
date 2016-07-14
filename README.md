@@ -1,4 +1,4 @@
-# androidLearn   作者：龙伟(dragon)
+# androidLearn   ***作者：龙伟(dragon)***
 
 ###0.本工程是以学习android为目的，同时欢迎大家修改工程中的代码，要是想向本工程pull request也是可以的，但要写清功能和详细的注释，让我们一起把这个项目做好，如有问题可以通过邮箱：alsodragon@gmail.com联系我。
 
@@ -6,3 +6,7 @@
 
 ###2.对增强现实或是虚拟现实研究有兴趣的朋友可以加入我们的讨论群：548077040。
 ![这里写图片描述](http://img.blog.csdn.net/20160714190752449)
+
+##Preject相关博客连接:
+###1.[Camera](http://blog.csdn.net/yywan1314520/article/details/51911869)
+###1.[Toast](http://blog.csdn.net/yywan1314520/article/details/51912913)
