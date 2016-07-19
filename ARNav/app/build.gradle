@@ -26,11 +26,13 @@ android {
 
 
 
-    dependencies {
-        compile fileTree(include: ['*.jar'], dir: 'libs')
-        testCompile 'junit:junit:4.12'
-        compile 'com.android.support:appcompat-v7:23.4.0'
-        compile files('libs/AMap_3DMap_V3.3.2_20160525.jar')
-        compile files('libs/AMap_Search_V3.3.0_20160616.jar')
-        compile files('libs/AMap_2DMap_V2.9.0_20160525.jar')
-    }
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile files('libs/AMap_3DMap_V3.3.2_20160525.jar')
+    compile files('libs/AMap_Search_V3.3.0_20160616.jar')
+    compile files('libs/AMap_2DMap_V2.9.0_20160525.jar')
+    compile files('libs/AMap_Location_V2.4.1_20160414.jar')
+    compile files('libs/android-support-v4.jar')
+}
