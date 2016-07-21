@@ -18,11 +18,8 @@
 
 
     <application
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:label="@string/app_name">
         <!--启动高德地图服务,下面的value不要照着输入，请输入你申请是的apikey value-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
@@ -37,6 +34,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".basicFuction.location.location"
+                  android:label="@string/locationmodesource_demo"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".basicFuction.poi.PoiClick"
+                  android:label="@string/poiclick_demo"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".basicFuction.locationMap.LocationMap"
+            android:screenOrientation="portrait"/>
         <!--开启定位服务要加上这一条，否则会定位失败，报错误码为10的错误-->
         <service android:name="com.amap.api.location.APSService" >
         </service>

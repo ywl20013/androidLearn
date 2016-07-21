@@ -1,181 +1,96 @@
 package com.dragon.arnav;
 
-import android.app.Activity;
+import android.app.ListActivity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.TextView;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-import com.amap.api.location.AMapLocation;//定位信息类
-import com.amap.api.location.AMapLocationClient;//定位服务类
-import com.amap.api.location.AMapLocationClientOption;//定位参数设置（在定位服务时需要这些参数）
-import com.amap.api.location.AMapLocationListener;//定位回调接口
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.LocationSource;
-import com.amap.api.maps.MapView;
+import com.amap.api.maps.MapsInitializer;
+import com.dragon.arnav.basicFuction.location.location;
+import com.dragon.arnav.basicFuction.locationMap.LocationMap;
+import com.dragon.arnav.basicFuction.poi.PoiClick;
+import com.dragon.arnav.basicFuction.view.FeatureView;
 
 //添加定位接口
-public class Main extends Activity implements LocationSource,
-        AMapLocationListener,OnCheckedChangeListener {
-    private AMap aMap;
-    private MapView mapView;
-    private OnLocationChangedListener mListener;
-    private AMapLocationClient mlocationClient;
-    private AMapLocationClientOption mLocationOption;
-    private RadioGroup mGPSModeGroup;
-
-    private TextView mLocationErrText;
+public final class Main extends ListActivity {
+//定义了一通用的类
+    private static class DemoDetails {
+        private final int titleId;
+        private final int descriptionId;
+    //把每个activity转成class
+        private final Class<? extends android.app.Activity> activityClass;
+//    构造函数（初始化操作）
+        public DemoDetails(int titleId, int descriptionId,
+                           Class<? extends android.app.Activity> activityClass) {
+            super();
+            this.titleId = titleId;
+            this.descriptionId = descriptionId;
+            this.activityClass = activityClass;
+        }
+    }
+//ArrayAdapter(Context context, int resource, int textViewResourceId, T[] objects)
+    private static class CustomArrayAdapter extends ArrayAdapter<DemoDetails> {
+//        CustomArrayAdapter中的构造函数
+        public CustomArrayAdapter(Context context, DemoDetails[] demos) {
+            super(context, R.layout.feature, R.id.title, demos);
+        }
+//public abstract View getView (int position, View convertView, ViewGroup parent)
+    @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            FeatureView featureView;
+//            convertView 对象是否是FeatureView这个特定类或者是它的子类的一个实例
+            if (convertView instanceof FeatureView) {
+                featureView = (FeatureView) convertView;
+            } else {
+//                getContext获取的是当前对象所在的Context
+                featureView = new FeatureView(getContext());
+            }
+            DemoDetails demo = getItem(position);
+            featureView.setTitleId(demo.titleId);
+            featureView.setDescriptionId(demo.descriptionId);
+            return featureView;
+        }
+    }
+//定义需要显示的列表项及描述、调用的类
+    private static final DemoDetails[] demos = {
+            new DemoDetails(R.string.locationsource_demo, R.string.locationsource_description,
+                    location.class),
+            new DemoDetails(R.string.poiclick_demo, R.string.poiclick_description,
+                PoiClick.class),
+            new DemoDetails(R.string.poikeywordsearch_demo, R.string.poikeywordsearch_description,
+                LocationMap.class),
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);// 不显示程序的标题栏
         setContentView(R.layout.main);
-        mapView = (MapView) findViewById(R.id.map);
-        mapView.onCreate(savedInstanceState);// 此方法必须重写
-        init();
+        setTitle("Dragon展示高德地图使用" + MapsInitializer.getVersion());
+//        自定义CustomArrayAdapter
+        CustomArrayAdapter adapter = new CustomArrayAdapter(
+                this.getApplicationContext(), demos);
+        setListAdapter(adapter);
     }
-
-    /**
-     * 初始化
-     */
-    private void init() {
-        if (aMap == null) {
-            aMap = mapView.getMap();
-            setUpMap();
-        }
-
-        mGPSModeGroup = (RadioGroup) findViewById(R.id.gps_radio_group);
-        mGPSModeGroup.setOnCheckedChangeListener(this);
-        mLocationErrText = (TextView)findViewById(R.id.location_errInfo_text);
-        mLocationErrText.setVisibility(View.GONE);
-    }
-
-    /**
-     * 设置一些amap的属性
-     */
-    private void setUpMap() {
-        aMap.setLocationSource(this);// 设置定位监听
-        aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
-        aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
-        // 设置定位的类型为定位模式 ，可以由定位、跟随或地图根据面向方向旋转几种
-        aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);//定位模式
-    }
-
+//Activity 可以单独获取Back键的按下事件，此处监听回退键
     @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (checkedId) {
-            case R.id.gps_locate_button:
-                // 设置定位的类型为定位模式
-                aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
-                break;
-            case R.id.gps_follow_button:
-                // 设置定位的类型为 跟随模式
-                aMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_FOLLOW);
-                break;
-            case R.id.gps_rotate_button:
-                // 设置定位的类型为根据地图面向方向旋转
-                aMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_ROTATE);
-                break;
-        }
-
+    public void onBackPressed() {
+//uper.onBackPressed()是执行系统的默认动作，就是退出当前activity，所以当我们要重写这个函数时，
+// 不要加super.onBackPressed()，就可以不退出activity，执行自己的代码
+        super.onBackPressed();
+        System.exit(0);//kill 掉当前进程。
     }
-
-    /**
-     * 方法必须重写
-     */
+//监听点击事件
     @Override
-    protected void onResume() {
-        super.onResume();
-        mapView.onResume();
-    }
-
-    /**
-     * 方法必须重写
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mapView.onPause();
-        deactivate();
-    }
-
-    /**
-     * 方法必须重写
-     */
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mapView.onSaveInstanceState(outState);
-    }
-
-    /**
-     * 方法必须重写
-     */
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-        if(null != mlocationClient){
-            mlocationClient.onDestroy();
-        }
-    }
-
-    /**
-     * 定位成功后回调函数
-     */
-    @Override
-    public void onLocationChanged(AMapLocation amapLocation) {
-        if (mListener != null && amapLocation != null) {
-            if (amapLocation != null
-                    && amapLocation.getErrorCode() == 0) {
-                mLocationErrText.setVisibility(View.GONE);
-                mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
-            } else {
-                String errText = "定位失败," + amapLocation.getErrorCode()+ ": " + amapLocation.getErrorInfo();
-                Log.e("AmapErr",errText);
-                mLocationErrText.setVisibility(View.VISIBLE);
-                mLocationErrText.setText(errText);
-            }
-        }
-    }
-
-    /**
-     * 激活定位
-     */
-    @Override
-    public void activate(OnLocationChangedListener listener) {
-        mListener = listener;
-        if (mlocationClient == null) {
-            mlocationClient = new AMapLocationClient(this);
-            mLocationOption = new AMapLocationClientOption();
-            //设置定位监听
-            mlocationClient.setLocationListener(this);
-            //设置为高精度定位模式
-            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-            //设置定位参数
-            mlocationClient.setLocationOption(mLocationOption);
-            // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
-            // 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
-            // 在定位结束后，在合适的生命周期调用onDestroy()方法
-            // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
-            mlocationClient.startLocation();
-        }
-    }
-
-    /**
-     * 停止定位
-     */
-    @Override
-    public void deactivate() {
-        mListener = null;
-        if (mlocationClient != null) {
-            mlocationClient.stopLocation();
-            mlocationClient.onDestroy();
-        }
-        mlocationClient = null;
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        DemoDetails demo = (DemoDetails) getListAdapter().getItem(position);
+//        getApplicationContext() 返回应用的上下文，生命周期是整个应用，应用摧毁它才摧毁
+//        Activity.this的context 返回当前activity的上下文，属于activity ，activity 摧毁他就摧毁
+//        getBaseContext() 返回由构造函数指定或setBaseContext()设置的上下文
+        startActivity(new Intent(this.getApplicationContext(),
+                demo.activityClass));
     }
 }

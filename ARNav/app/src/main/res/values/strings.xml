@@ -43,7 +43,7 @@
     <string name="left_arrow">\u2190</string>
     <string name="locationSensorGPS_demo">gps追随功能</string>
     <string name="locationSensorGPS_demo_description">介绍如何用gps定位图标箭头随手机转动而转动</string>
-    <string name="locationsource_demo">Location小蓝点功能</string>
+    <string name="locationsource_demo">定位功能Location</string>
     <string name="locationsource_description">介绍对系统定位显示小蓝点功能</string>
     <string name="locationmodesource_demo">Location三种模式</string>
     <string name="locationmodesource_description">介绍定位、追随、选择不同模式使用</string>
