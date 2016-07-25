@@ -8,7 +8,11 @@
 ![这里写图片描述](http://img.blog.csdn.net/20160714190752449)
 
 ###3.ARNav所对应的博客不只一篇，这里只是链接了一篇而已，如有需要可以在这链接下找到其他博客。
+
+###4.关于BaseCamera主要是说如何在这个摄像头视图添加控件的方法。
 ##Preject相关博客连接:
 ###1.[Camera](http://blog.csdn.net/yywan1314520/article/details/51911869)
 ###2.[Toast](http://blog.csdn.net/yywan1314520/article/details/51912913)
 ###3.[ARNav](http://blog.csdn.net/yywan1314520/article/details/51935385)
+###4.[AsyncTask](http://blog.csdn.net/yywan1314520/article/details/51985791)
+###5.[BaseCamera](http://blog.csdn.net/yywan1314520/article/details/52027523)
