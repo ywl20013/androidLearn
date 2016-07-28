@@ -129,6 +129,10 @@
     <string name="zoom_out">-</string>
     <string name="scale">比例尺</string>
     <string name="buttonScale">获取比例尺</string>
+    <string name="camera2_demo">camera2</string>
+    <string name="camera2_description">手机摄像头的测试</string>
+    <string name="basicMap_demo">basicMap</string>
+    <string name="basicMap_description">地图基本功能测试</string>
 
     <!-- offlinemap -->
     <string name="beijing">"北京"</string>

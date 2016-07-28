@@ -20,6 +20,8 @@ import com.dragon.arnav.R;
 /**
  * This file created by dragon on 2016/7/19 9:12,belong to com.dragon.arnav.basicFuction.location .
  */
+//locationSource:定义了一个提供位置数据的接口。
+//
 public class location extends Activity implements LocationSource,
         AMapLocationListener,RadioGroup.OnCheckedChangeListener {
     private AMap aMap;

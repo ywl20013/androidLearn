@@ -76,12 +76,16 @@ public class LocationMap extends FragmentActivity implements
      * 设置页面监听
      */
     private void setUpMap() {
+//        搜索按钮
         Button searButton = (Button) findViewById(R.id.searchButton);
         searButton.setOnClickListener(this);
+//        下一页按钮
         Button nextButton = (Button) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(this);
+//        文本输入监听
         searchText = (AutoCompleteTextView) findViewById(R.id.keyWord);
         searchText.addTextChangedListener(this);// 添加文本输入框监听事件
+//        默认输入城市：北京（POI搜索的范围，未输入进默认是全国）
         editCity = (EditText) findViewById(R.id.city);
         aMap.setOnMarkerClickListener(this);// 添加点击marker监听事件
         aMap.setInfoWindowAdapter(this);// 添加显示infowindow监听事件
@@ -90,6 +94,7 @@ public class LocationMap extends FragmentActivity implements
     /**
      * 点击搜索按钮
      */
+//    检测搜索关键字是否为空，不为空就开始搜索
     public void searchButton() {
         keyWord = AMapUtil.checkEditText(searchText);
         if ("".equals(keyWord)) {
@@ -103,12 +108,13 @@ public class LocationMap extends FragmentActivity implements
     /**
      * 点击下一页按钮
      */
+//    query： Poi查询条件类;  poiSearch： POI搜索; poiResult：poi返回的结果
     public void nextButton() {
         if (query != null && poiSearch != null && poiResult != null) {
             if (poiResult.getPageCount() - 1 > currentPage) {
                 currentPage++;
                 query.setPageNum(currentPage);// 设置查后一页
-                poiSearch.searchPOIAsyn();
+                poiSearch.searchPOIAsyn();//异步poi搜索
             } else {
                 ToastUtil.show(LocationMap.this,
                         R.string.no_result);
@@ -142,13 +148,13 @@ public class LocationMap extends FragmentActivity implements
      * 开始进行poi搜索
      */
     protected void doSearchQuery() {
-        showProgressDialog();// 显示进度框
+        showProgressDialog();// 耗时操作前，显示进度框
         currentPage = 0;
         query = new PoiSearch.Query(keyWord, "", editCity.getText().toString());// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
         query.setPageSize(10);// 设置每页最多返回多少条poiitem
         query.setPageNum(currentPage);// 设置查第一页
 
-        poiSearch = new PoiSearch(this, query);
+        poiSearch = new PoiSearch(this, query);//兴趣点搜索
         poiSearch.setOnPoiSearchListener(this);
         poiSearch.searchPOIAsyn();
     }
@@ -164,6 +170,7 @@ public class LocationMap extends FragmentActivity implements
         return null;
     }
 
+//    显POI相关信息窗（根据POI信息来调高德地图进行导航）
     @Override
     public View getInfoWindow(final Marker marker) {
         View view = getLayoutInflater().inflate(R.layout.poikeywordsearch_uri,
@@ -211,42 +218,42 @@ public class LocationMap extends FragmentActivity implements
     /**
      * 判断高德地图app是否已经安装
      */
-    public boolean getAppIn() {
-        PackageInfo packageInfo = null;
-        try {
-            packageInfo = this.getPackageManager().getPackageInfo(
-                    "com.autonavi.minimap", 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            packageInfo = null;
-            e.printStackTrace();
-        }
-        // 本手机没有安装高德地图app
-        if (packageInfo != null) {
-            return true;
-        }
-        // 本手机成功安装有高德地图app
-        else {
-            return false;
-        }
-    }
+//    public boolean getAppIn() {
+//        PackageInfo packageInfo = null;
+//        try {
+//            packageInfo = this.getPackageManager().getPackageInfo(
+//                    "com.autonavi.minimap", 0);
+//        } catch (PackageManager.NameNotFoundException e) {
+//            packageInfo = null;
+//            e.printStackTrace();
+//        }
+//        // 本手机没有安装高德地图app
+//        if (packageInfo != null) {
+//            return true;
+//        }
+//        // 本手机成功安装有高德地图app
+//        else {
+//            return false;
+//        }
+//    }
 
     /**
      * 获取当前app的应用名字
      */
-    public String getApplicationName() {
-        PackageManager packageManager = null;
-        ApplicationInfo applicationInfo = null;
-        try {
-            packageManager = getApplicationContext().getPackageManager();
-            applicationInfo = packageManager.getApplicationInfo(
-                    getPackageName(), 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            applicationInfo = null;
-        }
-        String applicationName = (String) packageManager
-                .getApplicationLabel(applicationInfo);
-        return applicationName;
-    }
+//    public String getApplicationName() {
+//        PackageManager packageManager = null;
+//        ApplicationInfo applicationInfo = null;
+//        try {
+//            packageManager = getApplicationContext().getPackageManager();
+//            applicationInfo = packageManager.getApplicationInfo(
+//                    getPackageName(), 0);
+//        } catch (PackageManager.NameNotFoundException e) {
+//            applicationInfo = null;
+//        }
+//        String applicationName = (String) packageManager
+//                .getApplicationLabel(applicationInfo);
+//        return applicationName;
+//    }
 
     /**
      * poi没有搜索到数据，返回一些推荐城市的信息

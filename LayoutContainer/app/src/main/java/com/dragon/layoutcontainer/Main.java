@@ -1,4 +1,5 @@
-package com.dragon.arnav;
+package com.dragon.layoutcontainer;
+
 
 import android.app.ListActivity;
 import android.content.Context;
@@ -9,23 +10,19 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.amap.api.maps.MapsInitializer;
-import com.dragon.arnav.basicFuction.basic.basicMap;
-import com.dragon.arnav.basicFuction.camera2.Camera2;
-import com.dragon.arnav.basicFuction.location.location;
-import com.dragon.arnav.basicFuction.locationMap.LocationMap;
-import com.dragon.arnav.basicFuction.poi.PoiClick;
-import com.dragon.arnav.basicFuction.view.FeatureView;
+import com.dragon.layoutcontainer.basicLayout.LinearLayout;
+import com.dragon.layoutcontainer.view.FeatureView;
+
 
 //添加定位接口
 public final class Main extends ListActivity {
-//定义了一通用的类
+    //定义了一通用的类
     private static class DemoDetails {
         private final int titleId;
         private final int descriptionId;
-    //把每个activity转成class
+        //把每个activity转成class
         private final Class<? extends android.app.Activity> activityClass;
-//    构造函数（初始化操作）
+        //    构造函数（初始化操作）
         public DemoDetails(int titleId, int descriptionId,
                            Class<? extends android.app.Activity> activityClass) {
             super();
@@ -34,14 +31,14 @@ public final class Main extends ListActivity {
             this.activityClass = activityClass;
         }
     }
-//ArrayAdapter(Context context, int resource, int textViewResourceId, T[] objects)
+    //ArrayAdapter(Context context, int resource, int textViewResourceId, T[] objects)
     private static class CustomArrayAdapter extends ArrayAdapter<DemoDetails> {
-//        CustomArrayAdapter中的构造函数
+        //        CustomArrayAdapter中的构造函数
         public CustomArrayAdapter(Context context, DemoDetails[] demos) {
             super(context, R.layout.feature, R.id.title, demos);
         }
-//public abstract View getView (int position, View convertView, ViewGroup parent)
-    @Override
+        //public abstract View getView (int position, View convertView, ViewGroup parent)
+        @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             FeatureView featureView;
 //            convertView 对象是否是FeatureView这个特定类或者是它的子类的一个实例
@@ -57,31 +54,23 @@ public final class Main extends ListActivity {
             return featureView;
         }
     }
-//定义需要显示的列表项及描述、调用的类
+    //定义需要显示的列表项及描述、调用的类
     private static final DemoDetails[] demos = {
-            new DemoDetails(R.string.locationsource_demo, R.string.locationsource_description,
-                    location.class),
-            new DemoDetails(R.string.poiclick_demo, R.string.poiclick_description,
-                PoiClick.class),
-            new DemoDetails(R.string.poikeywordsearch_demo, R.string.poikeywordsearch_description,
-                LocationMap.class),
-            new DemoDetails(R.string.camera2_demo, R.string.camera2_description,
-                Camera2.class),
-            new DemoDetails(R.string.basicMap_demo, R.string.basicMap_description,
-                basicMap.class),
+            new DemoDetails(R.string.linear_layout_demo, R.string.linear_layout_description,
+                    LinearLayout.class),
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        setTitle("Dragon展示高德地图使用" + MapsInitializer.getVersion());
+        setTitle("Dragon layoutContainer test" );
 //        自定义CustomArrayAdapter
         CustomArrayAdapter adapter = new CustomArrayAdapter(
                 this.getApplicationContext(), demos);
         setListAdapter(adapter);
     }
-//Activity 可以单独获取Back键的按下事件，此处监听回退键
+    //Activity 可以单独获取Back键的按下事件，此处监听回退键
     @Override
     public void onBackPressed() {
 //uper.onBackPressed()是执行系统的默认动作，就是退出当前activity，所以当我们要重写这个函数时，
@@ -89,7 +78,7 @@ public final class Main extends ListActivity {
         super.onBackPressed();
         System.exit(0);//kill 掉当前进程。
     }
-//监听点击事件
+    //监听点击事件
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         DemoDetails demo = (DemoDetails) getListAdapter().getItem(position);
@@ -100,3 +89,4 @@ public final class Main extends ListActivity {
                 demo.activityClass));
     }
 }
+

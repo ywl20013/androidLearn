@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dragon.arnav">
 <!--添加对应有权限-->
-
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera2.full" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -42,6 +44,10 @@
                   android:label="@string/poiclick_demo"
                   android:screenOrientation="portrait"/>
         <activity android:name=".basicFuction.locationMap.LocationMap"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".basicFuction.camera2.Camera2"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".basicFuction.basic.basicMap"
             android:screenOrientation="portrait"/>
         <!--开启定位服务要加上这一条，否则会定位失败，报错误码为10的错误-->
         <service android:name="com.amap.api.location.APSService" >

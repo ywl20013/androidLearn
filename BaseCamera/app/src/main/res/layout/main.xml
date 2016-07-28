@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
     <!--TextureView的最小AIP 14 ，现在改到最小已经是21-->
 
-
     <TextureView
         android:id="@+id/texture"
         android:layout_width="match_parent"
