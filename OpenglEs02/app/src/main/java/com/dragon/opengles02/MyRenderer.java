@@ -1,6 +1,7 @@
 package com.dragon.opengles02;
 
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -15,6 +16,7 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class MyRenderer implements GLSurfaceView.Renderer {
 
+
     float[] triangleData = new float[]{
             0.1f,0.6f,0.0f,//上顶点
             -0.3f,0.0f,0.0f,//左
@@ -27,15 +29,34 @@ public class MyRenderer implements GLSurfaceView.Renderer {
             0,0,1.0f,0//右->blue
     };
 
+
+    float[] rectData = new float[] {
+            0.4f, 0.4f , 0.0f, // 右上顶点
+            0.4f, -0.4f , 0.0f, // 右下顶点
+            -0.4f, 0.4f , 0.0f, // 左上顶点
+            -0.4f, -0.4f , 0.0f // 左下顶点
+    };
+    float[] rectColor = new float[]{
+            0, 1.0f, 0, 0, // 右上顶点绿色
+            0, 0, 1.0f, 0, // 右下顶点蓝色
+            1.0f, 0, 0, 0, // 左上顶点红色
+            1.0f, 1.0f, 0, 0 // 左下顶点黄色
+    };
+
     //    定义缓冲数据
     FloatBuffer triangleDataBuffer;
     FloatBuffer triangleColorBuffer;
-
+    FloatBuffer rectDataBuffer;
+    FloatBuffer rectColorBuffer;
+    private float rotate;
     public MyRenderer(){
 //        将数组->FloatBuffer
         triangleDataBuffer = floatBufferUtil(triangleData);
+        rectDataBuffer = floatBufferUtil(rectData);
 //        颜色数据->IntBuffer
         triangleColorBuffer = floatBufferUtil(triangleColor);
+        rectColorBuffer = floatBufferUtil(rectColor);
+
     }
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config){
@@ -69,6 +90,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     public void onDrawFrame(GL10 gl){
         // 清除屏幕缓存和深度缓存
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+
         // 启用顶点坐标数据
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         // 启用顶点颜色数据
@@ -79,15 +101,31 @@ public class MyRenderer implements GLSurfaceView.Renderer {
         // 重置当前的模型视图矩阵
         gl.glLoadIdentity();
         gl.glTranslatef(-0.32f, 0.35f, -1.2f);  // ①
+        gl.glRotatef(rotate,0f,0.1f,0f);
         // 设置顶点的位置数据
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, triangleDataBuffer);
         // 设置顶点的颜色数据
-        gl.glColorPointer(4, GL10.GL_FIXED, 0, triangleColorBuffer);
+        gl.glColorPointer(4, GL10.GL_FLOAT, 0, triangleColorBuffer);
         // 根据顶点数据绘制平面图形
         gl.glDrawArrays(GL10.GL_TRIANGLES, 0, 3);
+
+        //------------------------------------------------
+        // 重置当前的模型视图矩阵
+        gl.glLoadIdentity();
+        gl.glTranslatef(0.6f, 0.8f, -1.5f);
+        gl.glRotatef(rotate, 0f, 0f, 0.1f);
+        // 设置顶点的位置数据
+        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, rectDataBuffer);
+        // 设置顶点的颜色数据
+        gl.glColorPointer(4, GL10.GL_FIXED, 0, rectColorBuffer);
+        // 根据顶点数据绘制平面图形
+        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, 4);
+
         // 绘制结束
         gl.glFinish();
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+        rotate += 1;
+        Log.e("tests",rotate+"");
     }
 
     private FloatBuffer floatBufferUtil(float[] arr){

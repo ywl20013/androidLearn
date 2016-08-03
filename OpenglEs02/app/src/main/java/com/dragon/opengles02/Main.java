@@ -17,7 +17,7 @@ public class Main extends AppCompatActivity {
         MyRenderer myRenderer = new MyRenderer();
         mGLView.setRenderer(myRenderer);
         //只有在数据改变时才进行Render，这样来提高性能
-        mGLView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+//        mGLView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         setContentView(mGLView);
     }
 }
