@@ -14,6 +14,7 @@ import com.dragon.arnav.basicFuction.basic.basicMap;
 import com.dragon.arnav.basicFuction.camera2.Camera2;
 import com.dragon.arnav.basicFuction.location.location;
 import com.dragon.arnav.basicFuction.locationMap.LocationMap;
+import com.dragon.arnav.basicFuction.locationMap.PoiAroundSearch;
 import com.dragon.arnav.basicFuction.poi.PoiClick;
 import com.dragon.arnav.basicFuction.view.FeatureView;
 
@@ -69,6 +70,8 @@ public final class Main extends ListActivity {
                 Camera2.class),
             new DemoDetails(R.string.basicMap_demo, R.string.basicMap_description,
                 basicMap.class),
+            new DemoDetails(R.string.poiaroundsearch_demo, R.string.poiaroundsearch_description,
+                PoiAroundSearch.class),
     };
 
     @Override

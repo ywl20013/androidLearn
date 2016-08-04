@@ -2,13 +2,11 @@ package com.dragon.arnav.basicFuction.locationMap;
 
 
 import android.app.ProgressDialog;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -265,6 +263,7 @@ public class LocationMap extends FragmentActivity implements
                     + cities.get(i).getCityCode() + "城市编码:"
                     + cities.get(i).getAdCode() + "\n";
         }
+
         ToastUtil.show(LocationMap.this, infomation);
 
     }
@@ -302,11 +301,14 @@ public class LocationMap extends FragmentActivity implements
             if (result != null && result.getQuery() != null) {// 搜索poi的结果
                 if (result.getQuery().equals(query)) {// 是否是同一条
                     poiResult = result;
+
                     // 取得搜索到的poiitems有多少页
                     List<PoiItem> poiItems = poiResult.getPois();// 取得第一页的poiitem数据，页数从数字0开始
+                    Log.e("dragon test1",poiItems+"");
+                    Log.e("dragon test2",poiItems.get(0)+"");
+                    Log.e("dragon test3",poiItems.get(0).getTitle()+""+poiItems.get(0).getSnippet());
                     List<SuggestionCity> suggestionCities = poiResult
                             .getSearchSuggestionCitys();// 当搜索不到poiitem数据时，会返回含有搜索关键字的城市信息
-
                     if (poiItems != null && poiItems.size() > 0) {
                         aMap.clear();// 清理之前的图标
                         PoiOverlay poiOverlay = new PoiOverlay(aMap, poiItems);
@@ -316,6 +318,7 @@ public class LocationMap extends FragmentActivity implements
                     } else if (suggestionCities != null
                             && suggestionCities.size() > 0) {
                         showSuggestCity(suggestionCities);
+
                     } else {
                         ToastUtil.show(LocationMap.this,
                                 R.string.no_result);

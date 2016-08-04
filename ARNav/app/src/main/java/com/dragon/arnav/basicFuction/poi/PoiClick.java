@@ -5,8 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -149,7 +147,9 @@ public class PoiClick extends Activity implements LocationSource,AMapLocationLis
                 amapLocation.getStreetNum();//街道门牌号信息
                 amapLocation.getCityCode();//城市编码
                 amapLocation.getAdCode();//地区编码
-                Log.e("information",amapLocation.getAddress()+amapLocation.getProvince()+ amapLocation.getCity()+amapLocation.getDistrict());
+                Log.e("information",amapLocation.getAddress());
+                Log.e("lati+long",amapLocation.getLatitude()+","+amapLocation.getLongitude());
+
 
 
             } else {

@@ -49,6 +49,9 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".basicFuction.basic.basicMap"
             android:screenOrientation="portrait"/>
+        <activity android:name=".basicFuction.locationMap.PoiAroundSearch"/>
+
+
         <!--开启定位服务要加上这一条，否则会定位失败，报错误码为10的错误-->
         <service android:name="com.amap.api.location.APSService" >
         </service>

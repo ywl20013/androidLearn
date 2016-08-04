@@ -138,6 +138,7 @@ public class location extends Activity implements LocationSource,
                     && amapLocation.getErrorCode() == 0) {
                 mLocationErrText.setVisibility(View.GONE);
                 mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
+
             } else {
                 String errText = "定位失败," + amapLocation.getErrorCode()+ ": " + amapLocation.getErrorInfo();
                 Log.e("AmapErr",errText);
