@@ -1,4 +1,4 @@
-# androidLearn   ***作者：龙伟(dragon)***
+# androidLearn   ** 作者：龙伟(dragon) **
 
 ###1.本工程是以学习android为目的，同时欢迎大家修改工程中的代码，要是想向本工程pull request也是可以的，但要写清功能和详细的注释，让我们一起把这个项目做好，如有问题可以通过邮箱：alsodragon@gmail.com联系我。
 

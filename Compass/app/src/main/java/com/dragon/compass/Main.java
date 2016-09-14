@@ -78,6 +78,7 @@ private float calculateOrientation(){
         float degree = calculateOrientation();
         RotateAnimation ra = new RotateAnimation(currentDegree,-degree, Animation.RELATIVE_TO_PARENT,0.5f,
                 Animation.RELATIVE_TO_SELF,0.5f);
+
         ra.setDuration(200);
         znzImage.startAnimation(ra);
         currentDegree=-degree;
