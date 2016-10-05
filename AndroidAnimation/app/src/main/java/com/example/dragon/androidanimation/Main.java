@@ -2,7 +2,7 @@ package com.example.dragon.androidanimation;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 
 public class Main extends Activity {
@@ -14,7 +14,7 @@ public class Main extends Activity {
     private SeekBar rotationSeekBarX;
     private SeekBar rotationSeekBarY;
     private SeekBar rotationSeekBarZ;
-    private Button button;
+    private ImageView mImageView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class Main extends Activity {
      * @date 2016-6-22 下午5:26:26
      */
     private void initViews() {
-        button = (Button) findViewById(R.id.button);
+        mImageView = (ImageView) findViewById(R.id.imageView);
         seekBarX = (SeekBar) findViewById(R.id.translationX);
         seekBarX.setMax(400);
         seekBarY = (SeekBar) findViewById(R.id.translationY);
@@ -70,7 +70,7 @@ public class Main extends Activity {
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
                 // X方向平移
-                button.setTranslationX((float) progress);
+                mImageView.setTranslationX((float) progress);
             }
         });
         // 按钮Y方向平移动画
@@ -85,7 +85,7 @@ public class Main extends Activity {
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
                 // Y方向平移
-                button.setTranslationY((float) progress);
+                mImageView.setTranslationY((float) progress);
             }
         });
         // 按钮X方向缩放动画
@@ -101,7 +101,7 @@ public class Main extends Activity {
                     public void onProgressChanged(SeekBar seekBar,
                                                   int progress, boolean fromUser) {
                         // X方向缩放
-                        button.setScaleX((float) progress / 10f);
+                        mImageView.setScaleX((float) progress / 10f);
                     }
                 });
         // 按钮Y方向缩放动画
@@ -117,7 +117,7 @@ public class Main extends Activity {
                     public void onProgressChanged(SeekBar seekBar,
                                                   int progress, boolean fromUser) {
                         // Y方向缩放
-                        button.setScaleY((float) progress / 10f);
+                        mImageView.setScaleY((float) progress / 10f);
                     }
                 });
         // 按钮X方向旋转动画
@@ -133,7 +133,7 @@ public class Main extends Activity {
                     public void onProgressChanged(SeekBar seekBar,
                                                   int progress, boolean fromUser) {
                         // X方向旋转
-                        button.setRotationX((float) progress);
+                        mImageView.setRotationX((float) progress);
                     }
                 });
         // 按钮Y方向旋转动画
@@ -149,7 +149,7 @@ public class Main extends Activity {
                     public void onProgressChanged(SeekBar seekBar,
                                                   int progress, boolean fromUser) {
                         // Y方向旋转
-                        button.setRotationY((float) progress);
+                        mImageView.setRotationY((float) progress);
                     }
                 });
         // 按钮Z方向旋转动画
@@ -165,7 +165,7 @@ public class Main extends Activity {
                     public void onProgressChanged(SeekBar seekBar,
                                                   int progress, boolean fromUser) {
                         // 设置旋转
-                        button.setRotation((float) progress);
+                        mImageView.setRotation((float) progress);
                     }
                 });
     }

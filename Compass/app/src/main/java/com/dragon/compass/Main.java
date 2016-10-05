@@ -1,16 +1,16 @@
 package com.dragon.compass;
 
+import android.app.Activity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
-public class Main extends AppCompatActivity implements SensorEventListener {
+public class Main extends Activity implements SensorEventListener {
 
     ImageView znzImage;
     float currentDegree = 0f;
