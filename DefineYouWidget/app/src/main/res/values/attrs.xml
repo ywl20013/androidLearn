@@ -3,6 +3,8 @@
     <attr name="titleText" format="string" />
     <attr name="content" format="string"/>
     <attr name="titleTextColor" format="color" />
+    <attr name="titleBackGroundColor" format="color"/>
+    <attr name="contentBackGroundColor" format="color"/>
     <attr name="titleTextSize" format="dimension" />
 
     <declare-styleable name="CustomTitleView">
@@ -10,5 +12,7 @@
         <attr name="content"/>
         <attr name="titleTextColor" />
         <attr name="titleTextSize" />
+        <attr name="titleBackGroundColor"/>
+        <attr name="contentBackGroundColor"/>
     </declare-styleable>
 </resources>

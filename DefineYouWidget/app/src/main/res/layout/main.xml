@@ -4,12 +4,15 @@
                 android:layout_height="match_parent" >
 
     <com.example.dragon.defineyouwidget.MyView
+        android:id="@+id/myView"
         android:layout_width="100dp"
         android:layout_height="50dp"
         custom:titleText="美食广场"
         custom:content="800M"
-        custom:titleTextColor="#ff0000"
+        custom:titleTextColor="#00ff00"
         custom:titleTextSize="18sp"
+        custom:contentBackGroundColor="@color/colorAccent"
+        custom:titleBackGroundColor="@color/colorPrimaryDark"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="135dp"/>

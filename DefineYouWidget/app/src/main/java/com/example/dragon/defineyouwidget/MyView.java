@@ -30,7 +30,9 @@ public class MyView extends View {
      * 文本的大小
      */
     private int mTitleTextSize;
-
+//背景颜色
+    private int mTitleBackGroundColor;
+    private int mContentBackGroundColor;
     /**
      * 绘制时控制文本绘制的范围
      */
@@ -71,6 +73,14 @@ public class MyView extends View {
                 case R.styleable.CustomTitleView_titleText:
                     mTitleText = a.getString(attr);
                     break;
+//默认标题背景颜色绿
+                case R.styleable.CustomTitleView_titleBackGroundColor:
+                    mTitleBackGroundColor = a.getColor(attr,Color.GREEN);
+                    break;
+//默认内容背景颜色黄
+                case R.styleable.CustomTitleView_contentBackGroundColor:
+                    mContentBackGroundColor = a.getColor(attr,Color.YELLOW);
+                    break;
                 case R.styleable.CustomTitleView_content:
                     mContent = a.getString(attr);
                     break;
@@ -90,19 +100,20 @@ public class MyView extends View {
         a.recycle();
 
         /**
-         * 获得绘制文本的宽和高
+         * 获得绘制文本的宽和高，初始化画笔
          */
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setTextSize(mTitleTextSize);
         mPaint.setTextAlign(Paint.Align.CENTER);
         // mPaint.setColor(mTitleTextColor);
-        mBoundTitle = new Rect();
-        mPaint.getTextBounds(mTitleText, 0, mTitleText.length(), mBoundTitle);
-        mBoundContent = new Rect();
-        mPaint.getTextBounds(mContent, mTitleText.length(), mTitleText.length(), mBoundContent);
+//        mBoundTitle = new Rect();
+//        mPaint.getTextBounds(mTitleText, 0, mTitleText.length(), mBoundTitle);
+//        mBoundContent = new Rect();
+//        mPaint.getTextBounds(mContent, mTitleText.length(), mTitleText.length(), mBoundContent);
 
     }
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
@@ -113,20 +124,21 @@ public class MyView extends View {
     @Override
     protected void onDraw(Canvas canvas)
     {
-        mPaint.setColor(Color.YELLOW);
+        mPaint.setColor(mTitleBackGroundColor);
         RectF re1 = new RectF(0, 0, getMeasuredWidth(), getMeasuredHeight());
         canvas.drawRoundRect(re1,20,20,mPaint);
 //        canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
-        mPaint.setColor(Color.GREEN);
+        mPaint.setColor(mContentBackGroundColor);
         RectF re2 = new RectF(0, 0, getMeasuredWidth(), getMeasuredHeight()/2);
         canvas.drawRoundRect(re2,20,0,mPaint);
 //        canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight()/2, mPaint);
         mPaint.setColor(mTitleTextColor);
-        canvas.drawText(mTitleText, getWidth() / 2 , getHeight() / 3 +10 , mPaint);
+        canvas.drawText(this.mTitleText, getWidth() / 2 , getHeight() / 3 +10 , mPaint);
 
         mPaint.setColor(mTitleTextColor);
         canvas.drawText(mContent, getWidth() / 2 , getHeight()-getHeight()/7 , mPaint);
     }
+
 
 
 }
